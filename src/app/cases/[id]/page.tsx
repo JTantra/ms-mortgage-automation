@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 export default function CaseDetail() {
   const { id: caseId } = useParams();
-  const cases = useCasesList();
+  // const cases = useCasesList();
   
   
   return (

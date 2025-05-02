@@ -17,6 +17,6 @@ export type Case = BaseModel & {
   client: string;
 }
 
-export type CaseDetail = {
+// export type CaseDetail = {
 
-}
+// }

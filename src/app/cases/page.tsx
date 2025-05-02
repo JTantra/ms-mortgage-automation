@@ -3,8 +3,8 @@ import { useCasesList } from "@/hooks/cases";
 
 
 export default function CasesPage() {
-  const cases = useCasesList();
-  
+  // const cases = useCasesList();
+
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-col w-full h-full items-center justify-center">
