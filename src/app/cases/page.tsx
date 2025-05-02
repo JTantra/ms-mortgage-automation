@@ -1,6 +1,4 @@
 
-import { useCasesList } from "@/hooks/cases";
-
 
 export default function CasesPage() {
   // const cases = useCasesList();

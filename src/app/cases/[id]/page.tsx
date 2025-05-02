@@ -1,6 +1,5 @@
 "use client";
 
-import { useCasesList } from "@/hooks/cases";
 import { useParams } from "next/navigation";
 
 
