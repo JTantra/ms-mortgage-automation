@@ -12,7 +12,7 @@ async function AppHeader() {
         <Image
           src="/rhb-logo.webp"
           height={20}
-          width={120}
+          width={100}
           alt="RHB"
         />
       </Link>
