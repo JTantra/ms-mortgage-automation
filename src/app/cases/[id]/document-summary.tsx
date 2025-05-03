@@ -1,7 +1,6 @@
-import { CaseFieldStatus, FieldDocumentResult } from '@/models/case';
-import { BadgeAlertIcon, BadgeCheckIcon, CheckCircle2Icon, ClockIcon, EyeIcon, FileIcon, InfoIcon, PencilIcon, UserCheckIcon, UserSearchIcon, UserXIcon, XCircleIcon } from 'lucide-react';
+import { FieldDocumentResult } from '@/models/case';
+import { BadgeAlertIcon, BadgeCheckIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon } from 'lucide-react';
 import { Card } from 'primereact/card';
-import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useState } from 'react';
 import { format } from 'date-fns';

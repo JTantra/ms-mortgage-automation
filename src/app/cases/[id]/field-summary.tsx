@@ -1,17 +1,12 @@
-import { CaseFieldStatus } from '@/models/case';
-import { BadgeAlertIcon, BadgeCheckIcon, CheckCircle2Icon, InfoIcon, PencilIcon, UserCheckIcon, UserSearchIcon, UserXIcon, XCircleIcon } from 'lucide-react';
+import { CaseFieldStatus, FieldAnalysisResult } from '@/models/case';
+import { BadgeAlertIcon, BadgeCheckIcon, CheckCircle2Icon, InfoIcon, UserCheckIcon, UserSearchIcon, UserXIcon } from 'lucide-react';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
 import { useState } from 'react';
 
 type FieldSummaryProps = {
-  value: {
-    name: string,
-    value: string,
-    confidence: number,
-    status: string
-  },
+  value: FieldAnalysisResult,
   index?: number,
   onMoreInfo?: (e: any) => void,
 }
@@ -19,8 +14,6 @@ type FieldSummaryProps = {
 export default function FieldSummary(props: FieldSummaryProps) {
   const f = props.value;
 
-  const [value, setValue] = useState(f.value);
-  const [status, setStatus] = useState(f.status);
 
   const iconSize = "1.5rem";
   const iconClass = "icon m-1";
@@ -30,10 +23,33 @@ export default function FieldSummary(props: FieldSummaryProps) {
     fieldInfo: `field-info-${props.index}`,
     fieldApprove: `field-approve-${props.index}`,
     fieldReject: `field-reject-${props.index}`,
-    confidenceMark: `confidence-mark-${props.index}`,
+    confidenceMarkHigh: `confidence-mark-high-${props.index}`,
+    confidenceMarkMid: `confidence-mark-mid-${props.index}`,
+    confidenceMarkLow: `confidence-mark-low-${props.index}`,
     userChecked: `user-checked-${props.index}`,
     userRejected: `user-rejected-${props.index}`
   }
+
+  const result = f.documents.reduce((prev, doc) => {
+    if (prev.value === doc.value) {
+      return {
+        confidence: Math.min(prev.confidence, doc.confidence),
+        value: prev.value
+      }
+    }
+    else {
+      return {
+        confidence: 0,
+        value: ""
+      }
+    }
+  }, {
+    confidence: 1,
+    value: f.documents[0].value
+  });
+  
+  const [value, setValue] = useState(result.value);
+  const [status, setStatus] = useState(f.status);
 
   const subTitle = () => {
     return (
@@ -47,14 +63,19 @@ export default function FieldSummary(props: FieldSummaryProps) {
         {f.name}
         <div className="horizontal">
           {
-            status === "APPROVED" || f.confidence > 0.8 ? (
-              <BadgeCheckIcon id={componentIds.confidenceMark} size={iconSize} className={`${iconClass} text-green-500`}>
-                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Great confidence`} />
+            status === "APPROVED" || result.confidence > 0.8 ? (
+              <BadgeCheckIcon id={componentIds.confidenceMarkHigh} size={iconSize} className={`${iconClass} text-green-500`}>
+                <Tooltip target={`#${componentIds.confidenceMarkHigh}`} content={`Great confidence`} />
               </BadgeCheckIcon>
-            ) : (
-              <BadgeAlertIcon id={componentIds.confidenceMark} size={iconSize} className={`${iconClass} text-yellow-300`} >
-                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Lower confidence`} />
+            ) : (result.confidence === 0 && result.value === "" ? (
+              <BadgeAlertIcon id={componentIds.confidenceMarkLow} size={iconSize} className={`${iconClass} text-red-500`} >
+                <Tooltip target={`#${componentIds.confidenceMarkLow}`} content={`Conflicting Values`} />
               </BadgeAlertIcon>
+            ) : (
+              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`${iconClass} text-yellow-300`} >
+                <Tooltip target={`#${componentIds.confidenceMarkMid}`} content={`Lower confidence`} />
+              </BadgeAlertIcon>
+            ) 
             )
           }
           {
@@ -79,7 +100,7 @@ export default function FieldSummary(props: FieldSummaryProps) {
   return (
     <Card subTitle={subTitle} className="mx-2 my-1">
       <div className="flex flex-row items-center justify-between">
-        <InputText value={value} onChange={e => setValue(e.target.value)} className="p-inputtext-sm" disabled={f.status !== CaseFieldStatus.Pending}/>
+        <InputText value={value} onChange={e => setValue(e.target.value)} className="p-inputtext-sm" disabled={status !== CaseFieldStatus.Pending}/>
         <div className='flex flex-row'>
           <InfoIcon id={componentIds.fieldInfo} size={iconSize} className={iconClassClickable} onClick={props.onMoreInfo}>
             <Tooltip target={`#${componentIds.fieldInfo}`} content="View Documents" />
