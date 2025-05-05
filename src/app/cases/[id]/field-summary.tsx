@@ -60,7 +60,7 @@ export default function FieldSummary(props: FieldSummaryProps) {
           </div>
           {f.name}
         </div> */}
-        {f.name}
+        <div className="cursor-pointer" onClick={props.onMoreInfo}>{f.name}</div>
         <div className="horizontal">
           {
             status === "APPROVED" || result.confidence > 0.8 ? (
@@ -80,18 +80,13 @@ export default function FieldSummary(props: FieldSummaryProps) {
           }
           {
             status === CaseFieldStatus.Approved ? (
-              <UserCheckIcon id={componentIds.userChecked}size={iconSize} className={`${iconClass} text-green-500`} >
-                <Tooltip target={`#${componentIds.userChecked}`} content={`Approved`} />
-              </UserCheckIcon>
+              <UserCheckIcon id={componentIds.userChecked}size={iconSize} className={`${iconClass} text-green-500`} />
             ) : (status === CaseFieldStatus.Rejected ? 
-              <UserXIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-red-500`} >
-                <Tooltip target={`#${componentIds.userChecked}`} content={`Rejected`} />
-              </UserXIcon> : 
-              <UserSearchIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-gray-400`} >
-                <Tooltip target={`#${componentIds.userChecked}`} content={`Pending Checker`} />
-              </UserSearchIcon>
+              <UserXIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-red-500`} /> :
+              <UserSearchIcon id={componentIds.userChecked} size={iconSize} className={`${iconClassClickable} text-gray-400`} onClick={e => setStatus(CaseFieldStatus.Approved)} />
             )
           }
+          <Tooltip target={`#${componentIds.userChecked}`}  content={status === CaseFieldStatus.Approved ? 'Approved' : `Pending Checker`} />
         </div>
       </div>
     )
@@ -99,7 +94,7 @@ export default function FieldSummary(props: FieldSummaryProps) {
 
   return (
     <Card subTitle={subTitle} className="mx-2 my-1">
-      <div className="flex flex-row items-center justify-between">
+      {/* <div className="flex flex-row items-center justify-between">
         <InputText value={value} onChange={e => setValue(e.target.value)} className="p-inputtext-sm" disabled={status !== CaseFieldStatus.Pending}/>
         <div className='flex flex-row'>
           <InfoIcon id={componentIds.fieldInfo} size={iconSize} className={iconClassClickable} onClick={props.onMoreInfo}>
@@ -108,11 +103,11 @@ export default function FieldSummary(props: FieldSummaryProps) {
           <CheckCircle2Icon id={componentIds.fieldApprove} size={iconSize} className={iconClassClickable} onClick={e => setStatus(CaseFieldStatus.Approved)}>
             <Tooltip target={`#${componentIds.fieldApprove}`} content="Approve" />
           </CheckCircle2Icon>
-          {/* <XCircleIcon id={componentIds.fieldReject} size={iconSize} className={iconClassClickable} onClick={e => setStatus(CaseFieldStatus.Rejected)}>
+          <XCircleIcon id={componentIds.fieldReject} size={iconSize} className={iconClassClickable} onClick={e => setStatus(CaseFieldStatus.Rejected)}>
             <Tooltip target={`#${componentIds.fieldReject}`} content="Reject" />
-          </XCircleIcon> */}
+          </XCircleIcon>
         </div>
-      </div>
+      </div> */}
     </Card>
     // <div className="field-summary grid grid-cols-3 items-center" key={f.name}>
     //   <div className="col-span-1 flex flex-col">
