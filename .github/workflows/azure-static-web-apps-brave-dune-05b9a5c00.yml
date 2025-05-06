@@ -46,9 +46,11 @@ jobs:
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
-          app_build_command: pnpm run build
+          # app_build_command: pnpm run build
           # app_build_command: rm -rf ./.pnpm/node_modules/swc- && pnpm i -P
-          api_build_command: pnpm run build
+          # api_build_command: pnpm run build
+          skip_app_build: true
+          skip_api_build: true
           # api_build_command: pnpm install --no-frozen-lockfile && pnpm run build && rm -rf ./node_modules/@next/swc-* && rm -rf ./.next/cache
           # api_build_command: rm -rf ./node_modules/@next/swc-* && rm -rf ./.next/cache
           # api_build_command: rm -rf ./node_modules/.pnpm/node_modules/@next/swc-* && rm -rf ./.next/cache && rm -rf ./node_modules/.pnpm/@next+swc*
