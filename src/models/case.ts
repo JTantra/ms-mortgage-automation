@@ -1,4 +1,4 @@
-import { Content, ScaledPosition, Comment, IHighlight } from "react-pdf-highlighter";
+import { IHighlight } from "react-pdf-highlighter";
 
 export type BaseModel = {
   id: string;
@@ -6,17 +6,20 @@ export type BaseModel = {
   updatedAt: Date;
 }
 
-export enum CaseStatus {
+export enum ApplicationStatus {
   Open = "OPEN",
   Approved = "APPROVED",
   Rejected = "REJECTED",
   NeedMoreInfo = "NEED_MORE_INFO",
 }
 
-export type Case = BaseModel & {
-  status: CaseStatus;
+export type Application = BaseModel & {
+  description: string;
+  value: number;
+  numOfReviews: number;
+  status: ApplicationStatus;
   client: string;
-  results?: AnalysisResults
+  results: AnalysisResults
 }
 
 export type AnalysisResults = {
@@ -27,18 +30,20 @@ export type FieldAnalysisResult = {
   name: string;
   value: string;
   // confidence: number;
-  status: CaseFieldStatus;
+  status: ApplicationFieldStatus;
   documents: FieldDocumentResult[]
 }
 
 export enum DocumentType {
   LO = "Letter of Offer",
   SPA = "Sale and Purchase Agreement",
-  IC = "Identity Card",
+  IC = "Identity Card (IC)",
   DOA = "Deed of Assignment",
 }
 
 export type DocumentHighlight = IHighlight;
+
+export const CONFIDENCE_THRESHOLD = 0.7;
 
 export type BoundingRect = {
   x1: number,
@@ -51,6 +56,7 @@ export type BoundingRect = {
 
 export type FieldDocumentResult = {
   name: string;
+  isRef?: boolean;
   type: DocumentType;
   value: string;
   confidence: number;
@@ -66,7 +72,7 @@ export type FieldDocumentResult = {
   }
 }
 
-export enum CaseFieldStatus {
+export enum ApplicationFieldStatus {
   Pending = "PENDING",
   Approved = "APPROVED",
   Rejected = "REJECTED"

@@ -1,5 +1,5 @@
 import { FieldDocumentResult } from '@/models/case';
-import { BadgeAlertIcon, BadgeCheckIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon } from 'lucide-react';
+import { BadgeAlertIcon, BadgeCheckIcon, BadgeXIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon, SettingsIcon } from 'lucide-react';
 import { Tooltip } from 'primereact/tooltip';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
@@ -19,13 +19,14 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
   const iconClassClickable = "icon action m-1 cursor-pointer";
 
   const componentIds = {
+    isRefInfo: `document-ref-info-${props.index}`,
     fieldInfo: `document-info-${props.index}`,
     confidenceMark: `document-confidence-${props.index}`,
   }
 
   const subTitle = (f: FieldDocumentResult) => {
     return (
-      <div className="flex flex-row items-center justify-between">
+      <div className="horizontal justify-between">
         {/* <div className='flex flex-row'>
           <div >
             {props.index?.toString()}
@@ -33,17 +34,26 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
           {f.name}
         </div> */}
         {f.type}
-        <div className="flex flex-row">
+        <div className="horizontal">
+          {
+            f.isRef ? (
+              <SettingsIcon id={componentIds.isRefInfo} size={iconSize} className={`${iconClass} text-gray-400`}>
+                <Tooltip target={`#${componentIds.isRefInfo}`} content="Reference Value" />
+              </SettingsIcon>
+            ) : null
+          }
           {
             f.confidence > 0.8 ? (
               <BadgeCheckIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-green-500`}>
                 <Tooltip target={`#${componentIds.confidenceMark}`} content={`Great confidence`} />
               </BadgeCheckIcon>
-            ) : (
+            ) : (f.confidence === 0 ?
+              <BadgeXIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-red-300`}>
+                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Potential conflict`} />
+              </BadgeXIcon> :
               <BadgeAlertIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-yellow-300`} >
                 <Tooltip target={`#${componentIds.confidenceMark}`} content={`Lower confidence`} />
-              </BadgeAlertIcon>
-            )
+              </BadgeAlertIcon>)
           }
         </div>
       </div>
@@ -61,7 +71,7 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
             </div>
             <div className="horizontal cursor-pointer" onClick={e => props.onMoreInfo(d)}>
               <FileIcon size={iconSize} className={`${iconClass} text-gray-400`} />
-              <p className="text-sm">{d.name}</p>
+              <p className="text-sm text-blue-500">{d.name}</p>
             </div>
           </AccordionTab>
         ))

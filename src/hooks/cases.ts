@@ -1,10 +1,27 @@
-import { Case, CaseFieldStatus, CaseStatus, DocumentType } from "@/models/case";
-import { useQuery } from "@tanstack/react-query";
+import { Application, ApplicationFieldStatus, ApplicationStatus, DocumentType } from "@/models/case";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import App from "next/app";
 
 const BASE_WIDTH = 432;
 const BASE_HEIGHT = 574;
 
 const bbRects = {
+  IC_Owner: {
+    x1: 230,
+    y1: 187,
+    x2: 272,
+    y2: 197,
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT
+  },
+  IC_IC: {
+    x1: 221,
+    y1: 147,
+    x2: 255,
+    y2: 157,
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT
+  },
   LO_Owner: {
     x1: 190,
     y1: 455,
@@ -55,12 +72,15 @@ const bbRects = {
   }
 }
 
-const cases: Case[] = [
+const applications: Application[] = [
   {
-    id: "1",
+    id: "001",
     createdAt: new Date("2025-05-01T00:00:00Z"),
     updatedAt: new Date(),
-    status: CaseStatus.Open,
+    description: "Lorem ipsum dolor sit amet",
+    value: 1000000,
+    numOfReviews: 2,
+    status: ApplicationStatus.Open,
     client: "Aaron",
     results: {
       fields: [
@@ -68,8 +88,25 @@ const cases: Case[] = [
           name: "Registered Owner Name",
           value: "RAH ADIBA BIN",
           // confidence: 0.9,
-          status: CaseFieldStatus.Pending,
+          status: ApplicationFieldStatus.Pending,
           documents: [
+            {
+              type: DocumentType.IC,
+              isRef: true,
+              name: "ic-1.pdf",
+              value: "RAH ADIBA BIN",
+              confidence: 0.9,
+              url: "/ic-1.pdf",
+              createdAt: new Date("2025-05-01T00:00:00Z"),
+              evidence: {
+                id: String(Math.random()).slice(2),
+                position: {
+                  pageNumber: 1,
+                  boundingRect: bbRects.IC_Owner,
+                  rects: [bbRects.IC_Owner]
+                }
+              }
+            },
             {
               type: DocumentType.LO,
               name: "letter-offer-1.pdf",
@@ -130,8 +167,27 @@ const cases: Case[] = [
           name: "Registered Owner IC",
           value: "",
           // confidence: 0.7,
-          status: CaseFieldStatus.Pending,
+          status: ApplicationFieldStatus.Pending,
           documents: [
+            {
+              type: DocumentType.IC,
+              isRef: true,
+              name: "ic-1.pdf",
+              value: "1122010",
+              confidence: 0.9,
+              url: "/ic-1.pdf",
+              createdAt: new Date("2025-05-01T00:00:00Z"),
+              evidence: {
+                id: String(Math.random()).slice(2),
+                position: {
+                  pageNumber: 1,
+                  boundingRect: bbRects.IC_IC,
+                  rects: [
+                    bbRects.IC_IC
+                  ]
+                }
+              }
+            },
             {
               type: DocumentType.LO,
               name: "letter-offer-1.pdf",
@@ -172,7 +228,7 @@ const cases: Case[] = [
               type: DocumentType.DOA,
               name: "doa-1.pdf",
               value: "011122-01-0500",
-              confidence: 0.9,
+              confidence: 0,
               url: "/doa-1.pdf",
               createdAt: new Date("2025-05-01T00:00:00Z"),
               evidence: {
@@ -193,21 +249,37 @@ const cases: Case[] = [
   }
 ]
 
+console.log("data loaded", applications);
 
-export function useCasesList() {
+
+export function useApplicationsList() {
   return useQuery({
-    queryKey: ["cases"],
-    queryFn: async (): Promise<Case[]> => {
-      return cases;
+    queryKey: ["applications"],
+    queryFn: async (): Promise<Application[]> => {
+      return applications;
     }
   })
 }
 
-export function useCase(id: string) {
+export function useApplication(id: string) {
+  console.log("Fetching application", id);
   return useQuery({
-    queryKey: ["case", id],
-    queryFn: async (): Promise<Case | undefined> => {
-      return cases.find(c => c.id === id);
+    queryKey: ["application", id],
+    queryFn: async (): Promise<Application | undefined> => {
+      const app = applications.find(c => c.id === id);
+      return app;
     }
+  })
+}
+
+export function useUpdateApplication(id: string) {
+  console.log("Updating application", id);
+  const app = applications.find(c => c.id === id) as Application;
+  return useMutation({
+    // mutationKey: ["application", id],
+    mutationFn: async (newApp: Application): Promise<Application> => {
+      Object.assign(app, newApp);
+      return newApp;
+    },
   })
 }

@@ -1,27 +1,37 @@
 "use client";
 
-import { useCase } from "@/hooks/cases";
-import { useParams } from "next/navigation";
+import { useUpdateApplication, useApplication } from "@/hooks/cases";
+import { redirect, useParams } from "next/navigation";
 import { Button } from "primereact/button";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import FieldSummary from "./field-summary";
-import { FieldAnalysisResult, FieldDocumentResult } from "@/models/case";
+import { Application, ApplicationFieldStatus, FieldAnalysisResult, FieldDocumentResult } from "@/models/case";
 import DocumentSummary from "./document-summary";
 import DocumentViewer from "./document-viewer";
 import { Accordion } from "primereact/accordion";
+import { useMutation } from "@tanstack/react-query";
 
 export default function CaseDetail() {
   const { id: caseId } = useParams();
-  const { data } = useCase(caseId as string);
+  const { data, refetch } = useApplication(caseId as string);
+
+  const updateApplication = useUpdateApplication(caseId as string);
+  // const [app, setApp] = useState<Application | undefined>(data);
+  
+  console.log("Refreshing");
 
   const [selectedField, setSelectedField] = useState<FieldAnalysisResult | null>(null);
   const [selectedDoc, setSelectedDoc] = useState<FieldDocumentResult | null>(null);
 
+  const goSummary = () => {
+    redirect(`/cases/${caseId}/summary`);
+  }
+
   // const rect = {
-  //   x1: 260,
-  //   y1: 456,
-  //   x2: 307,
-  //   y2: 466,
+  //   x1: 221,
+  //   y1: 147,
+  //   x2: 255,
+  //   y2: 157,
   //   width: 432,
   //   height: 574
   // }
@@ -29,8 +39,8 @@ export default function CaseDetail() {
   return (
     <div className="flex flex-col w-full h-full p-8 relative overflow-hidden">
       <div className="flex items-center justify-between">
-        <p className="text-2xl font-bold">Case {caseId}</p>
-        <Button size="small" label="Save" severity="success" />
+        <p className="text-2xl font-bold">Application {caseId}</p>
+        <Button size="small" label="Get Summary" severity="success" onClick={goSummary}/>
       </div>
       <div className="grid grid-cols-8 2xl:grid-cols-10 mt-4 h-full relative">
         <div className="col-span-2 2xl:col-span-2 flex flex-col gap-4 border-r-1 overflow-y-auto">
@@ -41,7 +51,12 @@ export default function CaseDetail() {
                 <FieldSummary key={`${f.name}-${i}`} value={f} onMoreInfo={e => {
                   setSelectedField(f);
                   setSelectedDoc(null);
-                }} />
+                }} onApprove={async e => {
+                  console.log("Approve", i);
+                  const n = Object.assign({}, data)
+                  n.results.fields[i].status = ApplicationFieldStatus.Approved;
+                  updateApplication.mutate(n);
+                }}/>
               )
             })
           }
@@ -64,10 +79,10 @@ export default function CaseDetail() {
             selectedDoc ? (
               <DocumentViewer url={selectedDoc.url} highlights={[
                 // {
-                //   id: "201",
+                //   id: "001",
                 //   // type: "highlight",
                 //   position: {
-                //     pageNumber: 41,
+                //     pageNumber: 1,
                 //     boundingRect: rect,
                 //     rects: [
                 //       rect

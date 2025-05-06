@@ -1,5 +1,6 @@
-import { CaseFieldStatus, FieldAnalysisResult } from '@/models/case';
-import { BadgeAlertIcon, BadgeCheckIcon, CheckCircle2Icon, InfoIcon, UserCheckIcon, UserSearchIcon, UserXIcon } from 'lucide-react';
+import { ApplicationFieldStatus, CONFIDENCE_THRESHOLD, FieldAnalysisResult } from '@/models/case';
+import { set } from 'date-fns';
+import { BadgeAlertIcon, BadgeCheckIcon, BadgeXIcon, CheckCircle2Icon, InfoIcon, UserCheckIcon, UserSearchIcon, UserXIcon } from 'lucide-react';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { Tooltip } from 'primereact/tooltip';
@@ -9,6 +10,7 @@ type FieldSummaryProps = {
   value: FieldAnalysisResult,
   index?: number,
   onMoreInfo?: (e: any) => void,
+  onApprove?: (e: any) => void,
 }
 
 export default function FieldSummary(props: FieldSummaryProps) {
@@ -29,7 +31,11 @@ export default function FieldSummary(props: FieldSummaryProps) {
     userChecked: `user-checked-${props.index}`,
     userRejected: `user-rejected-${props.index}`
   }
-
+  const ref = f.documents.find(d => {
+    if (d.isRef) {
+      return true;
+    }
+  });
   const result = f.documents.reduce((prev, doc) => {
     if (prev.value === doc.value) {
       return {
@@ -44,12 +50,13 @@ export default function FieldSummary(props: FieldSummaryProps) {
       }
     }
   }, {
-    confidence: 1,
-    value: f.documents[0].value
+    confidence: ref?.confidence || 1,
+    value: ref?.value || ""
   });
-  
+
   const [value, setValue] = useState(result.value);
-  const [status, setStatus] = useState(f.status);
+  // const [status, setStatus] = useState(f.status);
+  const status = f.status;
 
   const subTitle = () => {
     return (
@@ -63,37 +70,41 @@ export default function FieldSummary(props: FieldSummaryProps) {
         <div className="cursor-pointer" onClick={props.onMoreInfo}>{f.name}</div>
         <div className="horizontal">
           {
-            status === "APPROVED" || result.confidence > 0.8 ? (
+            status === "APPROVED" || result.confidence > CONFIDENCE_THRESHOLD ? (
               <BadgeCheckIcon id={componentIds.confidenceMarkHigh} size={iconSize} className={`${iconClass} text-green-500`}>
                 <Tooltip target={`#${componentIds.confidenceMarkHigh}`} content={`Great confidence`} />
               </BadgeCheckIcon>
             ) : (result.confidence === 0 && result.value === "" ? (
-              <BadgeAlertIcon id={componentIds.confidenceMarkLow} size={iconSize} className={`${iconClass} text-red-500`} >
-                <Tooltip target={`#${componentIds.confidenceMarkLow}`} content={`Conflicting Values`} />
-              </BadgeAlertIcon>
+              <BadgeXIcon id={componentIds.confidenceMarkLow} size={iconSize} className={`${iconClass} text-red-500`} >
+                <Tooltip target={`#${componentIds.confidenceMarkLow}`} content={`Potential conflict
+                  `} />
+              </BadgeXIcon>
             ) : (
               <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`${iconClass} text-yellow-300`} >
                 <Tooltip target={`#${componentIds.confidenceMarkMid}`} content={`Lower confidence`} />
               </BadgeAlertIcon>
-            ) 
+            )
             )
           }
           {
-            status === CaseFieldStatus.Approved ? (
-              <UserCheckIcon id={componentIds.userChecked}size={iconSize} className={`${iconClass} text-green-500`} />
-            ) : (status === CaseFieldStatus.Rejected ? 
+            status === ApplicationFieldStatus.Approved ? (
+              <UserCheckIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-green-500`} />
+            ) : (status === ApplicationFieldStatus.Rejected ?
               <UserXIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-red-500`} /> :
-              <UserSearchIcon id={componentIds.userChecked} size={iconSize} className={`${iconClassClickable} text-gray-400`} onClick={e => setStatus(CaseFieldStatus.Approved)} />
+              <UserSearchIcon id={componentIds.userChecked} size={iconSize} className={`${iconClass} text-gray-400`} />
             )
           }
-          <Tooltip target={`#${componentIds.userChecked}`}  content={status === CaseFieldStatus.Approved ? 'Approved' : `Pending Checker`} />
+          <CheckCircle2Icon id={componentIds.fieldApprove} size={iconSize} className={iconClassClickable} onClick={props.onApprove}>
+            <Tooltip target={`#${componentIds.fieldApprove}`} content="Approve" />
+          </CheckCircle2Icon>
+          <Tooltip target={`#${componentIds.userChecked}`} content={status === ApplicationFieldStatus.Approved ? 'Approved' : `Pending Checker`} />
         </div>
       </div>
     )
   }
 
   return (
-    <Card subTitle={subTitle} className="mx-2 my-1">
+    <Card subTitle={subTitle} className="mr-2 my-1">
       {/* <div className="flex flex-row items-center justify-between">
         <InputText value={value} onChange={e => setValue(e.target.value)} className="p-inputtext-sm" disabled={status !== CaseFieldStatus.Pending}/>
         <div className='flex flex-row'>
@@ -109,16 +120,5 @@ export default function FieldSummary(props: FieldSummaryProps) {
         </div>
       </div> */}
     </Card>
-    // <div className="field-summary grid grid-cols-3 items-center" key={f.name}>
-    //   <div className="col-span-1 flex flex-col">
-    //     <p className="text-sm">{f.name}</p>
-    //   </div>
-    //   <div className="col-span-1 flex flex-col gap-2">
-
-    //   </div>
-    //   <div className="col-span-1 flex flex-col">
-
-    //   </div>
-    // </div>
   )
 }
