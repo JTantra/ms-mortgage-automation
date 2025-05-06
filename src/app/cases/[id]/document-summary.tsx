@@ -21,7 +21,9 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
   const componentIds = {
     isRefInfo: `document-ref-info-${props.index}`,
     fieldInfo: `document-info-${props.index}`,
-    confidenceMark: `document-confidence-${props.index}`,
+    confidenceMarkLow: `document-confidence-low-${props.index}`,
+    confidenceMarkMid: `document-confidence-mid-${props.index}`,
+    confidenceMarkHigh: `document-confidence-high-${props.index}`
   }
 
   const subTitle = (f: FieldDocumentResult) => {
@@ -44,15 +46,15 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
           }
           {
             f.confidence > 0.8 ? (
-              <BadgeCheckIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-green-500`}>
-                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Great confidence`} />
+              <BadgeCheckIcon id={componentIds.confidenceMarkHigh} size={iconSize} className={`icon m-1 text-green-500`}>
+                <Tooltip target={`#${componentIds.confidenceMarkHigh}`} content={`Great confidence`} />
               </BadgeCheckIcon>
             ) : (f.confidence === 0 ?
-              <BadgeXIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-red-300`}>
-                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Potential conflict`} />
+              <BadgeXIcon id={componentIds.confidenceMarkLow} size={iconSize} className={`icon m-1 text-red-300`}>
+                <Tooltip target={`#${componentIds.confidenceMarkLow}`} content={`Potential conflict`} />
               </BadgeXIcon> :
-              <BadgeAlertIcon id={componentIds.confidenceMark} size={iconSize} className={`icon m-1 text-yellow-300`} >
-                <Tooltip target={`#${componentIds.confidenceMark}`} content={`Lower confidence`} />
+              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`icon m-1 text-yellow-300`} >
+                <Tooltip target={`#${componentIds.confidenceMarkMid}`} content={`Lower confidence`} />
               </BadgeAlertIcon>)
           }
         </div>
