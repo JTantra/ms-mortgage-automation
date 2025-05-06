@@ -16,7 +16,7 @@ export default function SummaryPage() {
   const treeData = filteredFields?.map((f, i) => {
     const ref = f.documents.find(d => d.isRef);
     const issues = f.documents.filter(d => !d.isRef && (
-      d.confidence <= CONFIDENCE_THRESHOLD || 
+      // d.confidence <= CONFIDENCE_THRESHOLD || 
       d.value !== ref?.value
     ));
     

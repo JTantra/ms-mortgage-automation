@@ -14,7 +14,12 @@ export default function CasesPage() {
   const { data: apps } = useApplicationsList();
 
   const formatId = (app: Application) => {
-    return <Link href={`/cases/${app.id}`} className="text-blue-500 hover:text-blue-900">{app.id}</Link>;
+    if (app.results.fields.length > 0) {
+      return <Link href={`/cases/${app.id}`} className="text-blue-500 hover:text-blue-900">{app.id}</Link>;
+    }
+    else {
+      return <p>{app.id}</p>;
+    }
   }
 
   const formatCurrency = (app: Application) => {

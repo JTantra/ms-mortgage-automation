@@ -246,6 +246,32 @@ const applications: Application[] = [
         }
       ]
     }
+  },
+  {
+    id: "002",
+    createdAt: new Date("2025-05-02T00:00:00Z"),
+    updatedAt: new Date(),
+    description: "Lorem ipsum dolor sit amet",
+    value: 1500000,
+    numOfReviews: 4,
+    status: ApplicationStatus.Approved,
+    client: "Aaron",
+    results: {
+      fields: []
+    }
+  },
+  {
+    id: "003",
+    createdAt: new Date("2025-05-03T00:00:00Z"),
+    updatedAt: new Date(),
+    description: "Lorem ipsum dolor sit amet",
+    value: 2500000,
+    numOfReviews: 5,
+    status: ApplicationStatus.Rejected,
+    client: "Aaron",
+    results: {
+      fields: []
+    }
   }
 ]
 

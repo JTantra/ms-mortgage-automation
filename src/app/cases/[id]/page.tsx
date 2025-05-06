@@ -3,13 +3,11 @@
 import { useUpdateApplication, useApplication } from "@/hooks/cases";
 import { redirect, useParams } from "next/navigation";
 import { Button } from "primereact/button";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import FieldSummary from "./field-summary";
-import { Application, ApplicationFieldStatus, FieldAnalysisResult, FieldDocumentResult } from "@/models/case";
+import { ApplicationFieldStatus, FieldAnalysisResult, FieldDocumentResult } from "@/models/case";
 import DocumentSummary from "./document-summary";
 import DocumentViewer from "./document-viewer";
-import { Accordion } from "primereact/accordion";
-import { useMutation } from "@tanstack/react-query";
 
 export default function CaseDetail() {
   const { id: caseId } = useParams();
@@ -40,7 +38,7 @@ export default function CaseDetail() {
     <div className="flex flex-col w-full h-full p-8 relative overflow-hidden">
       <div className="flex items-center justify-between">
         <p className="text-2xl font-bold">Application {caseId}</p>
-        <Button size="small" label="Get Summary" severity="success" onClick={goSummary}/>
+        <Button size="small" label="Show Summary" severity="success" onClick={goSummary}/>
       </div>
       <div className="grid grid-cols-8 2xl:grid-cols-10 mt-4 h-full relative">
         <div className="col-span-2 2xl:col-span-2 flex flex-col gap-4 border-r-1 overflow-y-auto">

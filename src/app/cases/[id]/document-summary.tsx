@@ -1,5 +1,5 @@
 import { FieldDocumentResult } from '@/models/case';
-import { BadgeAlertIcon, BadgeCheckIcon, BadgeXIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon, SettingsIcon } from 'lucide-react';
+import { BadgeAlertIcon, BadgeCheckIcon, BadgeXIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon, SettingsIcon, SparkleIcon } from 'lucide-react';
 import { Tooltip } from 'primereact/tooltip';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
@@ -70,6 +70,10 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
             <div className="horizontal">
               <PencilIcon size={iconSize} className={`${iconClass} text-gray-400`} />
               <p className="text-sm">{d.value}</p>
+            </div>
+            <div className="horizontal">
+              <SparkleIcon size={iconSize} className={`${iconClass} text-gray-400`} />
+              <p className="text-sm">{d.confidence * 100}%</p>
             </div>
             <div className="horizontal cursor-pointer" onClick={e => props.onMoreInfo(d)}>
               <FileIcon size={iconSize} className={`${iconClass} text-gray-400`} />
