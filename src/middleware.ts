@@ -1,4 +1,10 @@
-console.log('Middleware loaded');
+import type { NextRequest } from 'next/server'
+
+
+export function middleware(request: NextRequest) {
+  console.log("Request", request.nextUrl.pathname);
+}
+
 export const config = {
   matcher: [
     /*
