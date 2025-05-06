@@ -29,7 +29,7 @@ export default function RootLayout({
           sizes="96x96"
         />
         <link rel="shortcut icon" href="/rhb-icon.ico" />
-        <meta name="apple-mobile-web-app-title" content="IPA Singapore" />
+        <meta name="apple-mobile-web-app-title" content="Mortgage Automation" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body
