@@ -14,12 +14,18 @@ export enum ApplicationStatus {
 }
 
 export type Application = BaseModel & {
-  description: string;
+  requestor: string;
+  propertyName: string;
   value: number;
   numOfReviews: number;
   status: ApplicationStatus;
-  client: string;
   results: AnalysisResults
+}
+
+export type NewAppDto = {
+  requestor: string;
+  propertyName: string;
+  value: number;
 }
 
 export type AnalysisResults = {

@@ -1313,6 +1313,11 @@ PrimeReact CSS
     outline-color: rgba(0, 0, 0, 0);
   }
 
+  .p-dropdown .p-dropdown-sm {
+    font-size: 0.875rem;
+    padding: 0.65625rem 0.65625rem;
+  }
+
   .p-dropdown:not(.p-disabled):hover {
     border-color: #d4d4d8;
   }
