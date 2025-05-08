@@ -47,7 +47,7 @@ export default function NewApplicationPage() {
       toastRef.current?.show({
         severity: "success",
         summary: "Success",
-        detail: "Application created successfully",
+        detail: "Case created successfully",
         life: DELAY,
       });
       setLoading(false);
@@ -165,7 +165,7 @@ export default function NewApplicationPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full overflow-y-auto">
-      <h1 className="flex text-2xl font-bold">New Application</h1>
+      <h1 className="flex text-2xl font-bold">New Mortgage Case</h1>
       <div className="flex flex-col min-w-[600px] border border-gray-200 bg-white shadow-sm p-4 mt-4">
         <label htmlFor="requestor" className="mt-4">Requestor</label>
         <InputText
@@ -200,14 +200,14 @@ export default function NewApplicationPage() {
           onChange={(e) => setValue(Number(e.value))}
         />
 
-        <DataTable header={buildDocHeader} value={docs}>
+        <DataTable header={buildDocHeader} value={docs} emptyMessage="No documents uploaded yet">
           <Column field="name" header="File Name" body={(rowData) => rowData.name} />
           {/* <Column field="size" header="Size (bytes)" body={(rowData) => rowData.size} /> */}
           <Column field="type" header="Document Type" body={buildDocType} />
           <Column field="action" header="Actions" body={buildRowActions} />
         </DataTable>
 
-        <Button onClick={handleCreateApp} label="Create Application" disabled={isNotComplete} loading={loading} className="mt-4"></Button>
+        <Button onClick={handleCreateApp} label="Create Case" disabled={isNotComplete} loading={loading} className="mt-4"></Button>
       </div>
       <Toast ref={toastRef} />
     </div>

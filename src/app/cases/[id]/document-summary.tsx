@@ -53,7 +53,7 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
               <BadgeXIcon id={componentIds.confidenceMarkLow} size={iconSize} className={`icon m-1 text-red-300`}>
                 <Tooltip target={`#${componentIds.confidenceMarkLow}`} content={`Potential conflict`} />
               </BadgeXIcon> :
-              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`icon m-1 text-yellow-300`} >
+              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`icon m-1 text-orange-300`} >
                 <Tooltip target={`#${componentIds.confidenceMarkMid}`} content={`Lower confidence`} />
               </BadgeAlertIcon>)
           }

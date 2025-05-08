@@ -37,7 +37,7 @@ export default function CaseDetail() {
   return (
     <div className="flex flex-col w-full h-full p-8 relative overflow-hidden">
       <div className="flex items-center justify-between">
-        <p className="text-2xl font-bold">Application {caseId}</p>
+        <p className="text-2xl font-bold">Mortgage Case {caseId}</p>
         <Button size="small" label="Show Summary" severity="success" onClick={goSummary}/>
       </div>
       <div className="grid grid-cols-8 2xl:grid-cols-10 mt-4 h-full relative">

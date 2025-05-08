@@ -62,8 +62,8 @@ export default function CasesPage() {
 
   const tableHeader = (
     <div className="flex flex-row items-center justify-between">
-      <h1 className="text-2xl font-bold">Applications List</h1>
-      <Button label="New Application" severity="success" className="p-button-sm" onClick={toNewApp} />
+      <h1 className="text-2xl font-bold">Mortgage Cases</h1>
+      <Button label="New Case" severity="success" className="p-button-sm" onClick={toNewApp} />
     </div>
   );
 
@@ -76,7 +76,7 @@ export default function CasesPage() {
           <Column field="requestor" header="Requestor"></Column>
           <Column field="propertyName" header="Property Name"></Column>
           <Column field="value" header="Value" body={formatCurrency}></Column>
-          <Column field="createdAt" header="Application Date" body={formatDate}></Column>
+          <Column field="createdAt" header="Created Date" body={formatDate}></Column>
           <Column field="numOfReviews" header="# Reviews"></Column>
           <Column field="status" header="Status" body={formatStatus}></Column>
         </DataTable>

@@ -58,7 +58,7 @@ export default function SummaryPage() {
 
   return (
     <div className="flex flex-col w-full h-full p-8 relative overflow-hidden">
-      <p className="text-2xl font-semibold mb-4">{`Application ${caseId?.toString()} Summary`}</p>
+      <p className="text-2xl font-semibold mb-4">{`Mortgage Case ${caseId?.toString()} Summary`}</p>
       <Tree value={treeData} nodeTemplate={nodeTemplate}/>
     </div>
   )

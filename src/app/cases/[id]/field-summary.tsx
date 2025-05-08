@@ -80,7 +80,7 @@ export default function FieldSummary(props: FieldSummaryProps) {
                   `} />
               </BadgeXIcon>
             ) : (
-              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`${iconClass} text-yellow-300`} >
+              <BadgeAlertIcon id={componentIds.confidenceMarkMid} size={iconSize} className={`${iconClass} text-orange-300`} >
                 <Tooltip target={`#${componentIds.confidenceMarkMid}`} content={`Lower confidence`} />
               </BadgeAlertIcon>
             )
