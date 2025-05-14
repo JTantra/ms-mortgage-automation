@@ -3,6 +3,7 @@
 import { useCreateApplication } from "@/hooks/cases";
 import { CURRENCY, LOCALE } from "@/hooks/data";
 import { DocumentType } from "@/models/case";
+import { getDocumentType } from "@/services";
 import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
@@ -55,23 +56,6 @@ export default function NewApplicationPage() {
     }, DELAY);
   };
 
-  const getDocType = (doc: Doc): DocumentType => {
-    let docType: DocumentType = DocumentType.IC;
-    const name = doc.name.toLowerCase();
-
-    if (name.includes("doa")) {
-      docType = DocumentType.DOA;
-    }
-    else if (name.includes("offer")) {
-      docType = DocumentType.LO;
-    }
-    else if (name.includes("spa")) {
-      docType = DocumentType.SPA;
-    }
-
-    return docType;
-  }
-
   const updateDocType = (rowData: Doc, docType: DocumentType) => {
     const newDocs = docs.map((doc) => {
       if (doc === rowData) {
@@ -117,7 +101,7 @@ export default function NewApplicationPage() {
             if (files) {
               const newFiles = Array.from(files);
               newFiles.forEach(f => {
-                (f as any).docType = getDocType(f);
+                (f as any).docType = getDocumentType(f);
               });
               setLoading(true);
 

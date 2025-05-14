@@ -1,4 +1,4 @@
-import { Application, ApplicationStatus, NewAppDto } from "@/models/case";
+import { Application, ApplicationStatus, DocumentType, NewAppDto } from "@/models/case";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { applications, defaultResults } from "@/hooks/data";
 
