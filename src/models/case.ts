@@ -22,6 +22,12 @@ export type Application = BaseModel & {
   results: AnalysisResults
 }
 
+export type Document = {
+  id: string;
+  name: string;
+  type: DocumentType;
+}
+
 export type NewAppDto = {
   requestor: string;
   propertyName: string;
@@ -41,10 +47,17 @@ export type FieldAnalysisResult = {
 }
 
 export enum DocumentType {
-  LO = "Letter of Offer",
-  SPA = "Sale and Purchase Agreement",
-  IC = "Identity Card (IC)",
-  DOA = "Deed of Assignment",
+  LO = "LO",
+  SPA = "SPA",
+  IC = "IC",
+  DOA = "DOA",
+}
+
+export const DocumentTypeMap: Record<DocumentType, string> = {
+  [DocumentType.LO]: "Letter of Offer",
+  [DocumentType.SPA]: "Sale and Purchase Agreement",
+  [DocumentType.IC]: "Identity Card (IC)",
+  [DocumentType.DOA]: "Deed of Assignment",
 }
 
 export type DocumentHighlight = IHighlight;

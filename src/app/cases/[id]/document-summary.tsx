@@ -1,4 +1,4 @@
-import { FieldDocumentResult } from '@/models/case';
+import { DocumentTypeMap, FieldDocumentResult } from '@/models/case';
 import { BadgeAlertIcon, BadgeCheckIcon, BadgeXIcon, ClockIcon, EyeIcon, FileIcon, PencilIcon, SettingsIcon, SparkleIcon } from 'lucide-react';
 import { Tooltip } from 'primereact/tooltip';
 import { Accordion, AccordionTab } from 'primereact/accordion';
@@ -35,7 +35,7 @@ export default function DocumentSummary(props: DocumentSummaryProps) {
           </div>
           {f.name}
         </div> */}
-        {f.type}
+        {DocumentTypeMap[f.type]}
         <div className="horizontal">
           {
             f.isRef ? (

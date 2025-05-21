@@ -2,7 +2,7 @@
 
 import { useCreateApplication } from "@/hooks/cases";
 import { CURRENCY, LOCALE } from "@/hooks/data";
-import { DocumentType } from "@/models/case";
+import { DocumentType, DocumentTypeMap } from "@/models/case";
 import { getDocumentType } from "@/services";
 import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -125,6 +125,8 @@ export default function NewApplicationPage() {
           className="p-dropdown-sm w-full"
           value={curr}
           options={Object.values(DocumentType)}
+          itemTemplate={(option) => DocumentTypeMap[option]}
+          valueTemplate={(option) => DocumentTypeMap[option]}
           onChange={(e) => updateDocType(rowData, e.value as DocumentType)}
         />
       </div>
