@@ -10,7 +10,7 @@ export class DocIntelService {
     });
   };
 
-  public async analyzeDocument(file: File, options?: {pages?: string, searchablePdf?: string}): Promise<{result: AnalyzeOperationOutput, searchablePdfBuffer?: Buffer}> {
+  public async analyzeDocument(file: File, options?: {pages?: string, searchablePdf?: boolean}): Promise<{result: AnalyzeOperationOutput, searchablePdfBuffer?: Buffer}> {
     const buffer = await file.arrayBuffer();
     const response = await this.client
       .path("/documentModels/{modelId}:analyze", "prebuilt-read")
@@ -20,7 +20,7 @@ export class DocIntelService {
           base64Source: Buffer.from(buffer).toString('base64')
         },
         queryParameters: {
-          pages: options?.pages ? options.pages : "*",
+          pages: options?.pages ? options.pages : undefined,
           searchablePdf: options?.searchablePdf,
           output: options?.searchablePdf ? ["pdf"] : undefined
         }
@@ -51,7 +51,7 @@ export class DocIntelService {
     };
   }
 
-  public async downloadSearchablPdf(resultId: string): Promise<Buffer> {
+  private async downloadSearchablPdf(resultId: string): Promise<Buffer> {
     const res = await this.client
       .path("/documentModels/{modelId}/analyzeResults/{resultId}/pdf", "prebuilt-read", resultId)
       .get();
