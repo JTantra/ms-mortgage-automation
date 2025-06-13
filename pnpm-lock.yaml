@@ -11,6 +11,9 @@ importers:
       '@azure-rest/ai-document-intelligence':
         specifier: ^1.1.0
         version: 1.1.0
+      '@azure/cosmos':
+        specifier: ^4.4.1
+        version: 4.4.1
       '@azure/identity':
         specifier: ^4.10.0
         version: 4.10.0
@@ -35,6 +38,9 @@ importers:
       multer:
         specifier: ^2.0.0
         version: 2.0.0
+      nanoid:
+        specifier: ^5.1.5
+        version: 5.1.5
       next:
         specifier: 15.3.1
         version: 15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -149,8 +155,20 @@ packages:
     resolution: {integrity: sha512-gT4H8mTaSXRz7eGTuQyq1aIJnJqeXzpOe9Ay7Z3FrCouer14CbV3VzjnJrNrQfbBpGBLO9oy8BmrY75A0p53cA==}
     engines: {node: '>=18.0.0'}
 
+  '@azure/cosmos@4.4.1':
+    resolution: {integrity: sha512-6JpqfYs1gSrqw1Ln4N3Y7UHKl0DxPTWQrd18Z5mYJYdgvPqxT2KqH5slYgb0sgVllT1LENddpQ8UGsTU9JwRQg==}
+    engines: {node: '>=18.0.0'}
+
   '@azure/identity@4.10.0':
     resolution: {integrity: sha512-iT53Sre2NJK6wzMWnvpjNiR3md597LZ3uK/5kQD2TkrY9vqhrY5bt2KwELNjkOWQ9n8S/92knj/QEykTtjMNqQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@azure/keyvault-common@2.0.0':
+    resolution: {integrity: sha512-wRLVaroQtOqfg60cxkzUkGKrKMsCP6uYXAOomOIysSMyt1/YM0eUn9LqieAWM8DLcU4+07Fio2YGpPeqUbpP9w==}
+    engines: {node: '>=18.0.0'}
+
+  '@azure/keyvault-keys@4.9.0':
+    resolution: {integrity: sha512-ZBP07+K4Pj3kS4TF4XdkqFcspWwBHry3vJSOFM5k5ZABvf7JfiMonvaFk2nBF6xjlEbMpz5PE1g45iTMme0raQ==}
     engines: {node: '>=18.0.0'}
 
   '@azure/logger@1.2.0':
@@ -1871,6 +1889,11 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanoid@5.1.5:
+    resolution: {integrity: sha512-Ir/+ZpE9fDsNH0hQ3C68uyThDXzYcim2EqcZ8zn8Chtt1iylPT9xXJB0kPCnqzgcEGikO9RxSrh63MsmVCU7Fw==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+
   napi-build-utils@2.0.0:
     resolution: {integrity: sha512-GEbrYkbfF7MoNaoh2iGG84Mnf/WZfB0GdGEsM8wz7Expx/LlWf5U8t9nvJKXSp3qr5IsEbK04cBGhol/KwOsWA==}
 
@@ -2080,6 +2103,9 @@ packages:
       '@types/react':
         optional: true
 
+  priorityqueuejs@2.0.0:
+    resolution: {integrity: sha512-19BMarhgpq3x4ccvVi8k2QpJZcymo/iFUcrhPd4V96kYGovOdTsWwy7fxChYi4QY+m2EnGBWSX9Buakz+tWNQQ==}
+
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -2225,6 +2251,10 @@ packages:
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
+
+  semaphore@1.1.0:
+    resolution: {integrity: sha512-O4OZEaNtkMd/K0i6js9SL+gqy0ZCBMgUvlSqHKi4IBdjhe7wB8pwztUk1BbZ1fmrvpwFrPbHzqd2w5pTcJH6LA==}
+    engines: {node: '>=0.8.0'}
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -2649,6 +2679,21 @@ snapshots:
       fast-xml-parser: 5.2.3
       tslib: 2.8.1
 
+  '@azure/cosmos@4.4.1':
+    dependencies:
+      '@azure/abort-controller': 2.1.2
+      '@azure/core-auth': 1.9.0
+      '@azure/core-rest-pipeline': 1.20.0
+      '@azure/core-tracing': 1.2.0
+      '@azure/core-util': 1.12.0
+      '@azure/keyvault-keys': 4.9.0
+      fast-json-stable-stringify: 2.1.0
+      priorityqueuejs: 2.0.0
+      semaphore: 1.1.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - supports-color
+
   '@azure/identity@4.10.0':
     dependencies:
       '@azure/abort-controller': 2.1.2
@@ -2661,6 +2706,36 @@ snapshots:
       '@azure/msal-browser': 4.12.0
       '@azure/msal-node': 3.5.3
       open: 10.1.2
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@azure/keyvault-common@2.0.0':
+    dependencies:
+      '@azure/abort-controller': 2.1.2
+      '@azure/core-auth': 1.9.0
+      '@azure/core-client': 1.9.4
+      '@azure/core-rest-pipeline': 1.20.0
+      '@azure/core-tracing': 1.2.0
+      '@azure/core-util': 1.12.0
+      '@azure/logger': 1.2.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@azure/keyvault-keys@4.9.0':
+    dependencies:
+      '@azure/abort-controller': 2.1.2
+      '@azure/core-auth': 1.9.0
+      '@azure/core-client': 1.9.4
+      '@azure/core-http-compat': 2.3.0
+      '@azure/core-lro': 2.7.2
+      '@azure/core-paging': 1.6.2
+      '@azure/core-rest-pipeline': 1.20.0
+      '@azure/core-tracing': 1.2.0
+      '@azure/core-util': 1.12.0
+      '@azure/keyvault-common': 2.0.0
+      '@azure/logger': 1.2.0
       tslib: 2.8.1
     transitivePeerDependencies:
       - supports-color
@@ -4549,6 +4624,8 @@ snapshots:
 
   nanoid@3.3.11: {}
 
+  nanoid@5.1.5: {}
+
   napi-build-utils@2.0.0:
     optional: true
 
@@ -4778,6 +4855,8 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.2
 
+  priorityqueuejs@2.0.0: {}
+
   process-nextick-args@2.0.1: {}
 
   prop-types@15.8.1:
@@ -4962,6 +5041,8 @@ snapshots:
       is-regex: 1.2.1
 
   scheduler@0.26.0: {}
+
+  semaphore@1.1.0: {}
 
   semver@6.3.1: {}
 

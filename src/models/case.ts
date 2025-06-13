@@ -19,7 +19,16 @@ export type Application = BaseModel & {
   value: number;
   numOfReviews: number;
   status: ApplicationStatus;
-  results: AnalysisResults
+  results: AnalysisResults;
+
+  // FOR DB
+  storeId?: string;
+  documents?: {
+    name: string;
+    type: DocumentType;
+    url: string;
+    createdAt: Date;
+  }[]
 }
 
 export type Document = {
@@ -53,7 +62,7 @@ export enum DocumentType {
   DOA = "DOA",
 }
 
-export const DocumentTypeMap: Record<DocumentType, string> = {
+export const DocumentTypeMap: Record<string, string> = {
   [DocumentType.LO]: "Letter of Offer",
   [DocumentType.SPA]: "Sale and Purchase Agreement",
   [DocumentType.IC]: "Identity Card (IC)",
@@ -78,10 +87,10 @@ export type FieldDocumentResult = {
   isRef?: boolean;
   type: DocumentType;
   value: string;
-  confidence: number;
-  url: string;
-  createdAt: Date;
-  evidence: {
+  confidence?: number;
+  url?: string;
+  createdAt?: Date;
+  evidence?: {
     id: string;
     position: {
       pageNumber: number,
