@@ -10,7 +10,7 @@ async function AppHeader() {
     <header className="flex shadow-sm w-full items-center justify-between py-2 px-4 sticky top-0 z-100 bg-white">
       <Link href="/">
         <Image
-          src="/rhb-logo.webp"
+          src="/msft-logo.png"
           height={20}
           width={100}
           alt="RHB"

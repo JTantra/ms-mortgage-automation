@@ -25,10 +25,10 @@ export default function RootLayout({
         <link
           rel="icon"
           type="image/ico"
-          href="/rhb-icon.ico"
+          href="/msft-icon.ico"
           sizes="96x96"
         />
-        <link rel="shortcut icon" href="/rhb-icon.ico" />
+        <link rel="shortcut icon" href="/msft-icon.ico" />
         <meta name="apple-mobile-web-app-title" content="Mortgage Automation" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
