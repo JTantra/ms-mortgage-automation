@@ -13,7 +13,7 @@ async function AppHeader() {
           src="/msft-logo.png"
           height={20}
           width={100}
-          alt="RHB"
+          alt="Microsoft"
         />
       </Link>
       <Link href="#">
